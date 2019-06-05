@@ -1,0 +1,31 @@
+{
+    "name": "GarageCode",
+    "fields": [
+        {
+            "fieldName": "createdAt",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "validUntil",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "garage",
+            "otherEntityRelationshipName": "garageCode",
+            "relationshipName": "garageId",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190605202946",
+    "entityTableName": "garage_code",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

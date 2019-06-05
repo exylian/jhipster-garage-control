@@ -45,6 +45,8 @@ public class CacheConfiguration {
             createCache(cm, de.felixhoevel.garagecontrol.domain.User.class.getName() + ".authorities");
             createCache(cm, de.felixhoevel.garagecontrol.domain.PersistentToken.class.getName());
             createCache(cm, de.felixhoevel.garagecontrol.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, de.felixhoevel.garagecontrol.domain.Garage.class.getName());
+            createCache(cm, de.felixhoevel.garagecontrol.domain.GarageCode.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

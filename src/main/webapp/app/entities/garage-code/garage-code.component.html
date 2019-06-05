@@ -1,0 +1,62 @@
+<div>
+    <h2 id="page-heading">
+        <span>Garage Codes</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-garage-code" [routerLink]="['/garage-code/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Garage Code
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="garageCodes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Created At</span></th>
+            <th><span>Valid Until</span></th>
+            <th><span>Garage Id</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let garageCode of garageCodes ;trackBy: trackId">
+                <td><a [routerLink]="['/garage-code', garageCode.id, 'view' ]">{{garageCode.id}}</a></td>
+                <td>{{garageCode.createdAt | date:'mediumDate'}}</td>
+                <td>{{garageCode.validUntil | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="garageCode.garageId">
+                        <a [routerLink]="['../garage', garageCode.garageId?.id, 'view' ]" >{{garageCode.garageId?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/garage-code', garageCode.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/garage-code', garageCode.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'garage-code', { outlets: { popup: garageCode.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
