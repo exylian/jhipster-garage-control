@@ -27,7 +27,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new GarageCode(0, currentDate, currentDate);
+      elemDefault = new GarageCode(0, 0, 'AAAAAAA', currentDate, currentDate);
     });
 
     describe('Service methods', () => {
@@ -77,6 +77,8 @@ describe('Service Tests', () => {
       it('should update a GarageCode', async () => {
         const returnedFromService = Object.assign(
           {
+            code: 1,
+            customer: 'BBBBBB',
             createdAt: currentDate.format(DATE_FORMAT),
             validUntil: currentDate.format(DATE_FORMAT)
           },
@@ -102,6 +104,8 @@ describe('Service Tests', () => {
       it('should return a list of GarageCode', async () => {
         const returnedFromService = Object.assign(
           {
+            code: 1,
+            customer: 'BBBBBB',
             createdAt: currentDate.format(DATE_FORMAT),
             validUntil: currentDate.format(DATE_FORMAT)
           },

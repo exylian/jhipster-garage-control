@@ -2,6 +2,14 @@
     "name": "GarageCode",
     "fields": [
         {
+            "fieldName": "code",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "customer",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "createdAt",
             "fieldType": "LocalDate"
         },

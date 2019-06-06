@@ -11,6 +11,14 @@ import { RouterModule } from '@angular/router';
       {
         path: 'garage-code',
         loadChildren: './garage-code/garage-code.module#GarageControlGarageCodeModule'
+      },
+      {
+        path: 'garage',
+        loadChildren: './garage/garage.module#GarageControlGarageModule'
+      },
+      {
+        path: 'garage-code',
+        loadChildren: './garage-code/garage-code.module#GarageControlGarageCodeModule'
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

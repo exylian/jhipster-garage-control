@@ -35,6 +35,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = GarageControlApp.class)
 public class GarageCodeResourceIT {
 
+    private static final Integer DEFAULT_CODE = 1;
+    private static final Integer UPDATED_CODE = 2;
+
+    private static final String DEFAULT_CUSTOMER = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOMER = "BBBBBBBBBB";
+
     private static final LocalDate DEFAULT_CREATED_AT = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CREATED_AT = LocalDate.now(ZoneId.systemDefault());
 
@@ -83,6 +89,8 @@ public class GarageCodeResourceIT {
      */
     public static GarageCode createEntity(EntityManager em) {
         GarageCode garageCode = new GarageCode()
+            .code(DEFAULT_CODE)
+            .customer(DEFAULT_CUSTOMER)
             .createdAt(DEFAULT_CREATED_AT)
             .validUntil(DEFAULT_VALID_UNTIL);
         return garageCode;
@@ -95,6 +103,8 @@ public class GarageCodeResourceIT {
      */
     public static GarageCode createUpdatedEntity(EntityManager em) {
         GarageCode garageCode = new GarageCode()
+            .code(UPDATED_CODE)
+            .customer(UPDATED_CUSTOMER)
             .createdAt(UPDATED_CREATED_AT)
             .validUntil(UPDATED_VALID_UNTIL);
         return garageCode;
@@ -120,6 +130,8 @@ public class GarageCodeResourceIT {
         List<GarageCode> garageCodeList = garageCodeRepository.findAll();
         assertThat(garageCodeList).hasSize(databaseSizeBeforeCreate + 1);
         GarageCode testGarageCode = garageCodeList.get(garageCodeList.size() - 1);
+        assertThat(testGarageCode.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testGarageCode.getCustomer()).isEqualTo(DEFAULT_CUSTOMER);
         assertThat(testGarageCode.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testGarageCode.getValidUntil()).isEqualTo(DEFAULT_VALID_UNTIL);
     }
@@ -155,6 +167,8 @@ public class GarageCodeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(garageCode.getId().intValue())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
+            .andExpect(jsonPath("$.[*].customer").value(hasItem(DEFAULT_CUSTOMER.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].validUntil").value(hasItem(DEFAULT_VALID_UNTIL.toString())));
     }
@@ -170,6 +184,8 @@ public class GarageCodeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(garageCode.getId().intValue()))
+            .andExpect(jsonPath("$.code").value(DEFAULT_CODE))
+            .andExpect(jsonPath("$.customer").value(DEFAULT_CUSTOMER.toString()))
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
             .andExpect(jsonPath("$.validUntil").value(DEFAULT_VALID_UNTIL.toString()));
     }
@@ -195,6 +211,8 @@ public class GarageCodeResourceIT {
         // Disconnect from session so that the updates on updatedGarageCode are not directly saved in db
         em.detach(updatedGarageCode);
         updatedGarageCode
+            .code(UPDATED_CODE)
+            .customer(UPDATED_CUSTOMER)
             .createdAt(UPDATED_CREATED_AT)
             .validUntil(UPDATED_VALID_UNTIL);
 
@@ -207,6 +225,8 @@ public class GarageCodeResourceIT {
         List<GarageCode> garageCodeList = garageCodeRepository.findAll();
         assertThat(garageCodeList).hasSize(databaseSizeBeforeUpdate);
         GarageCode testGarageCode = garageCodeList.get(garageCodeList.size() - 1);
+        assertThat(testGarageCode.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testGarageCode.getCustomer()).isEqualTo(UPDATED_CUSTOMER);
         assertThat(testGarageCode.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testGarageCode.getValidUntil()).isEqualTo(UPDATED_VALID_UNTIL);
     }
