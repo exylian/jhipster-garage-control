@@ -25,6 +25,12 @@ public class GarageCode implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code")
+    private Integer code;
+
+    @Column(name = "customer")
+    private String customer;
+
     @Column(name = "created_at")
     private LocalDate createdAt;
 
@@ -42,6 +48,32 @@ public class GarageCode implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public GarageCode code(Integer code) {
+        this.code = code;
+        return this;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public GarageCode customer(String customer) {
+        this.customer = customer;
+        return this;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     public LocalDate getCreatedAt() {
@@ -104,6 +136,8 @@ public class GarageCode implements Serializable {
     public String toString() {
         return "GarageCode{" +
             "id=" + getId() +
+            ", code=" + getCode() +
+            ", customer='" + getCustomer() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", validUntil='" + getValidUntil() + "'" +
             "}";

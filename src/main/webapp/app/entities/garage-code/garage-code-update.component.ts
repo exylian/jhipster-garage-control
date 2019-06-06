@@ -25,6 +25,8 @@ export class GarageCodeUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    code: [],
+    customer: [],
     createdAt: [],
     validUntil: [],
     garageId: []
@@ -56,6 +58,8 @@ export class GarageCodeUpdateComponent implements OnInit {
   updateForm(garageCode: IGarageCode) {
     this.editForm.patchValue({
       id: garageCode.id,
+      code: garageCode.code,
+      customer: garageCode.customer,
       createdAt: garageCode.createdAt,
       validUntil: garageCode.validUntil,
       garageId: garageCode.garageId
@@ -80,6 +84,8 @@ export class GarageCodeUpdateComponent implements OnInit {
     const entity = {
       ...new GarageCode(),
       id: this.editForm.get(['id']).value,
+      code: this.editForm.get(['code']).value,
+      customer: this.editForm.get(['customer']).value,
       createdAt: this.editForm.get(['createdAt']).value,
       validUntil: this.editForm.get(['validUntil']).value,
       garageId: this.editForm.get(['garageId']).value
