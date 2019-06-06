@@ -5,6 +5,8 @@ entity Garage {
 
 entity GarageCode {
 	id Integer,
+    code Integer,
+    customer String,
     createdAt LocalDate,
     validUntil LocalDate
 }
