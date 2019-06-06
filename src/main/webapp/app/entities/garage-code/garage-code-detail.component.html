@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="garageCode">
+            <h2><span>Garage Code</span> {{garageCode.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Created At</span></dt>
+                <dd>
+                    <span>{{garageCode.createdAt}}</span>
+                </dd>
+                <dt><span>Valid Until</span></dt>
+                <dd>
+                    <span>{{garageCode.validUntil}}</span>
+                </dd>
+                <dt><span>Garage Id</span></dt>
+                <dd>
+                    <div *ngIf="garageCode.garageId">
+                        <a [routerLink]="['/garage', garageCode.garageId?.id, 'view']">{{garageCode.garageId?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/garage-code', garageCode.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
