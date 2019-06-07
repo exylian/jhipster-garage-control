@@ -1,3 +1,4 @@
+
 <div class="row">
     <div [ngSwitch]="isAuthenticated()">
         <div class="alert alert-warning" *ngSwitchCase="false">
@@ -17,6 +18,7 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Description</span></th>
+                    <th><span>Active</span></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -24,6 +26,10 @@
                 <tr *ngFor="let garage of garages ;trackBy: trackId">
                     <td><a [routerLink]="['/garage', garage.id, 'view' ]">{{garage.id}}</a></td>
                     <td>{{garage.description}}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-ok-circle"></span>
+                        <span class="glyphicon glyphicon-ok-circle"></span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
