@@ -27,8 +27,8 @@
                     <td><a [routerLink]="['/garage', garage.id, 'view' ]">{{garage.id}}</a></td>
                     <td>{{garage.description}}</td>
                     <td>
-                        <span class="glyphicon glyphicon-ok-circle"></span>
-                        <span class="glyphicon glyphicon-ok-circle"></span>
+                        <fa-icon [icon]="'check-circle'" style="color: green"></fa-icon>
+                        <fa-icon [icon]="'times-circle'" style="color: red"></fa-icon>
                     </td>
                     <td class="text-right">
                         <div class="btn-group">

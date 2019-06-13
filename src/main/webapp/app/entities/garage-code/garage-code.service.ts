@@ -49,6 +49,10 @@ export class GarageCodeService {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findGarage(garage: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IGarageCode[]>(this.resourceUrl);
+  }
+
   protected convertDateFromClient(garageCode: IGarageCode): IGarageCode {
     const copy: IGarageCode = Object.assign({}, garageCode, {
       createdAt: garageCode.createdAt != null && garageCode.createdAt.isValid() ? garageCode.createdAt.format(DATE_FORMAT) : null,
