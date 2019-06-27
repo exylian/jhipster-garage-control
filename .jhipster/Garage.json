@@ -7,11 +7,11 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190605202945",
+    "changelogDate": "20190627081915",
     "entityTableName": "garage",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

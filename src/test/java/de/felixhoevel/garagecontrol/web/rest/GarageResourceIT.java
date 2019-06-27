@@ -3,6 +3,7 @@ package de.felixhoevel.garagecontrol.web.rest;
 import de.felixhoevel.garagecontrol.GarageControlApp;
 import de.felixhoevel.garagecontrol.domain.Garage;
 import de.felixhoevel.garagecontrol.repository.GarageRepository;
+import de.felixhoevel.garagecontrol.service.GarageService;
 import de.felixhoevel.garagecontrol.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +41,9 @@ public class GarageResourceIT {
     private GarageRepository garageRepository;
 
     @Autowired
+    private GarageService garageService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -61,7 +65,7 @@ public class GarageResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final GarageResource garageResource = new GarageResource(garageRepository);
+        final GarageResource garageResource = new GarageResource(garageService);
         this.restGarageMockMvc = MockMvcBuilders.standaloneSetup(garageResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -176,7 +180,7 @@ public class GarageResourceIT {
     @Transactional
     public void updateGarage() throws Exception {
         // Initialize the database
-        garageRepository.saveAndFlush(garage);
+        garageService.save(garage);
 
         int databaseSizeBeforeUpdate = garageRepository.findAll().size();
 
@@ -221,7 +225,7 @@ public class GarageResourceIT {
     @Transactional
     public void deleteGarage() throws Exception {
         // Initialize the database
-        garageRepository.saveAndFlush(garage);
+        garageService.save(garage);
 
         int databaseSizeBeforeDelete = garageRepository.findAll().size();
 
@@ -230,7 +234,7 @@ public class GarageResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Garage> garageList = garageRepository.findAll();
         assertThat(garageList).hasSize(databaseSizeBeforeDelete - 1);
     }

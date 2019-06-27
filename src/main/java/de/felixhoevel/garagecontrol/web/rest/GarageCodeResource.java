@@ -1,7 +1,7 @@
 package de.felixhoevel.garagecontrol.web.rest;
 
 import de.felixhoevel.garagecontrol.domain.GarageCode;
-import de.felixhoevel.garagecontrol.repository.GarageCodeRepository;
+import de.felixhoevel.garagecontrol.service.GarageCodeService;
 import de.felixhoevel.garagecontrol.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -32,10 +32,10 @@ public class GarageCodeResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final GarageCodeRepository garageCodeRepository;
+    private final GarageCodeService garageCodeService;
 
-    public GarageCodeResource(GarageCodeRepository garageCodeRepository) {
-        this.garageCodeRepository = garageCodeRepository;
+    public GarageCodeResource(GarageCodeService garageCodeService) {
+        this.garageCodeService = garageCodeService;
     }
 
     /**
@@ -51,7 +51,7 @@ public class GarageCodeResource {
         if (garageCode.getId() != null) {
             throw new BadRequestAlertException("A new garageCode cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        GarageCode result = garageCodeRepository.save(garageCode);
+        GarageCode result = garageCodeService.save(garageCode);
         return ResponseEntity.created(new URI("/api/garage-codes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +72,7 @@ public class GarageCodeResource {
         if (garageCode.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        GarageCode result = garageCodeRepository.save(garageCode);
+        GarageCode result = garageCodeService.save(garageCode);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, garageCode.getId().toString()))
             .body(result);
@@ -86,7 +86,7 @@ public class GarageCodeResource {
     @GetMapping("/garage-codes")
     public List<GarageCode> getAllGarageCodes() {
         log.debug("REST request to get all GarageCodes");
-        return garageCodeRepository.findAll();
+        return garageCodeService.findAll();
     }
 
     /**
@@ -98,7 +98,7 @@ public class GarageCodeResource {
     @GetMapping("/garage-codes/{id}")
     public ResponseEntity<GarageCode> getGarageCode(@PathVariable Long id) {
         log.debug("REST request to get GarageCode : {}", id);
-        Optional<GarageCode> garageCode = garageCodeRepository.findById(id);
+        Optional<GarageCode> garageCode = garageCodeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(garageCode);
     }
 
@@ -111,7 +111,7 @@ public class GarageCodeResource {
     @DeleteMapping("/garage-codes/{id}")
     public ResponseEntity<Void> deleteGarageCode(@PathVariable Long id) {
         log.debug("REST request to delete GarageCode : {}", id);
-        garageCodeRepository.deleteById(id);
+        garageCodeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

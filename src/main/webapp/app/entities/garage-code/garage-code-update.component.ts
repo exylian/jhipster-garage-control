@@ -16,7 +16,6 @@ import { GarageService } from 'app/entities/garage';
   templateUrl: './garage-code-update.component.html'
 })
 export class GarageCodeUpdateComponent implements OnInit {
-  garageCode: IGarageCode;
   isSaving: boolean;
 
   garages: IGarage[];
@@ -44,7 +43,6 @@ export class GarageCodeUpdateComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ garageCode }) => {
       this.updateForm(garageCode);
-      this.garageCode = garageCode;
     });
     this.garageService
       .query()
@@ -81,7 +79,7 @@ export class GarageCodeUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IGarageCode {
-    const entity = {
+    return {
       ...new GarageCode(),
       id: this.editForm.get(['id']).value,
       code: this.editForm.get(['code']).value,
@@ -90,11 +88,10 @@ export class GarageCodeUpdateComponent implements OnInit {
       validUntil: this.editForm.get(['validUntil']).value,
       garageId: this.editForm.get(['garageId']).value
     };
-    return entity;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IGarageCode>>) {
-    result.subscribe((res: HttpResponse<IGarageCode>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
   protected onSaveSuccess() {
