@@ -3,6 +3,7 @@ package de.felixhoevel.garagecontrol.web.rest;
 import de.felixhoevel.garagecontrol.GarageControlApp;
 import de.felixhoevel.garagecontrol.domain.GarageCode;
 import de.felixhoevel.garagecontrol.repository.GarageCodeRepository;
+import de.felixhoevel.garagecontrol.service.GarageCodeService;
 import de.felixhoevel.garagecontrol.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,9 @@ public class GarageCodeResourceIT {
     private GarageCodeRepository garageCodeRepository;
 
     @Autowired
+    private GarageCodeService garageCodeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -72,7 +76,7 @@ public class GarageCodeResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final GarageCodeResource garageCodeResource = new GarageCodeResource(garageCodeRepository);
+        final GarageCodeResource garageCodeResource = new GarageCodeResource(garageCodeService);
         this.restGarageCodeMockMvc = MockMvcBuilders.standaloneSetup(garageCodeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -202,7 +206,7 @@ public class GarageCodeResourceIT {
     @Transactional
     public void updateGarageCode() throws Exception {
         // Initialize the database
-        garageCodeRepository.saveAndFlush(garageCode);
+        garageCodeService.save(garageCode);
 
         int databaseSizeBeforeUpdate = garageCodeRepository.findAll().size();
 
@@ -253,7 +257,7 @@ public class GarageCodeResourceIT {
     @Transactional
     public void deleteGarageCode() throws Exception {
         // Initialize the database
-        garageCodeRepository.saveAndFlush(garageCode);
+        garageCodeService.save(garageCode);
 
         int databaseSizeBeforeDelete = garageCodeRepository.findAll().size();
 
@@ -262,7 +266,7 @@ public class GarageCodeResourceIT {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<GarageCode> garageCodeList = garageCodeRepository.findAll();
         assertThat(garageCodeList).hasSize(databaseSizeBeforeDelete - 1);
     }

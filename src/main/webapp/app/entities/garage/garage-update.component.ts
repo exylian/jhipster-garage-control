@@ -11,7 +11,6 @@ import { GarageService } from './garage.service';
   templateUrl: './garage-update.component.html'
 })
 export class GarageUpdateComponent implements OnInit {
-  garage: IGarage;
   isSaving: boolean;
 
   editForm = this.fb.group({
@@ -25,7 +24,6 @@ export class GarageUpdateComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ garage }) => {
       this.updateForm(garage);
-      this.garage = garage;
     });
   }
 
@@ -51,16 +49,15 @@ export class GarageUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IGarage {
-    const entity = {
+    return {
       ...new Garage(),
       id: this.editForm.get(['id']).value,
       description: this.editForm.get(['description']).value
     };
-    return entity;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IGarage>>) {
-    result.subscribe((res: HttpResponse<IGarage>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
   protected onSaveSuccess() {

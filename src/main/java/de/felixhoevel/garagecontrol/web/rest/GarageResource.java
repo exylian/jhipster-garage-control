@@ -1,7 +1,7 @@
 package de.felixhoevel.garagecontrol.web.rest;
 
 import de.felixhoevel.garagecontrol.domain.Garage;
-import de.felixhoevel.garagecontrol.repository.GarageRepository;
+import de.felixhoevel.garagecontrol.service.GarageService;
 import de.felixhoevel.garagecontrol.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -32,10 +32,10 @@ public class GarageResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final GarageRepository garageRepository;
+    private final GarageService garageService;
 
-    public GarageResource(GarageRepository garageRepository) {
-        this.garageRepository = garageRepository;
+    public GarageResource(GarageService garageService) {
+        this.garageService = garageService;
     }
 
     /**
@@ -51,7 +51,7 @@ public class GarageResource {
         if (garage.getId() != null) {
             throw new BadRequestAlertException("A new garage cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Garage result = garageRepository.save(garage);
+        Garage result = garageService.save(garage);
         return ResponseEntity.created(new URI("/api/garages/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +72,7 @@ public class GarageResource {
         if (garage.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Garage result = garageRepository.save(garage);
+        Garage result = garageService.save(garage);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, garage.getId().toString()))
             .body(result);
@@ -86,7 +86,7 @@ public class GarageResource {
     @GetMapping("/garages")
     public List<Garage> getAllGarages() {
         log.debug("REST request to get all Garages");
-        return garageRepository.findAll();
+        return garageService.findAll();
     }
 
     /**
@@ -98,7 +98,7 @@ public class GarageResource {
     @GetMapping("/garages/{id}")
     public ResponseEntity<Garage> getGarage(@PathVariable Long id) {
         log.debug("REST request to get Garage : {}", id);
-        Optional<Garage> garage = garageRepository.findById(id);
+        Optional<Garage> garage = garageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(garage);
     }
 
@@ -111,7 +111,7 @@ public class GarageResource {
     @DeleteMapping("/garages/{id}")
     public ResponseEntity<Void> deleteGarage(@PathVariable Long id) {
         log.debug("REST request to delete Garage : {}", id);
-        garageRepository.deleteById(id);
+        garageService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

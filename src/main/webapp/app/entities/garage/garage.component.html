@@ -10,7 +10,10 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="garages">
+    <div class="alert alert-warning" *ngIf="garages?.length === 0">
+        <span>No garages found</span>
+    </div>
+    <div class="table-responsive" *ngIf="garages?.length > 0">
         <table class="table table-striped">
             <thead>
             <tr>

@@ -1,18 +1,12 @@
 package de.felixhoevel.garagecontrol.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.models.auth.In;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Random;
 
 /**
  * A GarageCode.
@@ -43,13 +37,6 @@ public class GarageCode implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("garageCodes")
     private Garage garageId;
-
-   /* public GarageCode(String customer, LocalDate validUntil){
-        this.code = generateCode(8);
-        this.customer = customer;
-        this.createdAt = LocalDate.now();
-        this.validUntil = validUntil;
-    }*/
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -151,10 +138,5 @@ public class GarageCode implements Serializable {
             ", createdAt='" + getCreatedAt() + "'" +
             ", validUntil='" + getValidUntil() + "'" +
             "}";
-    }
-
-    private int generateCode(int length){
-        SecureRandom random = new SecureRandom();
-        return random.nextInt(length);
     }
 }

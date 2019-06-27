@@ -1,7 +1,6 @@
 package de.felixhoevel.garagecontrol.repository;
 
 import de.felixhoevel.garagecontrol.domain.GarageCode;
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +12,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GarageCodeRepository extends JpaRepository<GarageCode, Long> {
 
-    GarageCode findByGarageId(long garage_id);
 }
