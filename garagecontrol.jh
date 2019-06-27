@@ -15,3 +15,6 @@ relationship ManyToOne {
  GarageCode{garageId} to Garage
 }
 
+service Garage with serviceClass
+service GarageCode with serviceClass
+
